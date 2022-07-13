@@ -6,3 +6,7 @@ An application that allows you to *add movies to a list*, in addition to their i
 This can be useful for movie critics to keep the movies they watch organized, or for personal use. 
 This project is of interest of me, because I love watching movies but tend to forget which movies I have watched, 
 and my rating of them!
+
+## User Stories
+
+- As a user, I want to add a movie to a movie list
