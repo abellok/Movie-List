@@ -10,30 +10,33 @@ public class Movie {
     //           mystery, horror, or romance
     // EFFECTS: constructs a movie with a title, director, and genre
     public Movie(String title, String director, String genre) {
-        //stub
+        this.title = title;
+        this.director = director;
+        this.genre = genre;
+        this.rating = 0;
     }
 
     public String getTitle() {
-        return ""; //stub
+        return title;
     }
 
     public String getDirector() {
-        return ""; //stub
+        return director;
     }
 
     public String getGenre() {
-        return ""; //stub
+        return genre;
     }
 
-    public boolean getRating() {
-        return false; //stub
+    public int getRating() {
+        return rating;
     }
 
     // REQUIRES: rating must be between 1-5, inclusive
     // MODIFIES: this
     // EFFECTS: changes
     public void changeRating(int rating) {
-        //stub
+        this.rating = rating;
     }
 
 }
