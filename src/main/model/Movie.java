@@ -1,5 +1,6 @@
 package model;
 
+// represents a single movie, with a title, director, genre, and movie
 public class Movie {
     private String title;
     private String director;
@@ -17,7 +18,7 @@ public class Movie {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getDirector() {
@@ -25,11 +26,11 @@ public class Movie {
     }
 
     public String getGenre() {
-        return genre;
+        return this.genre;
     }
 
     public int getRating() {
-        return rating;
+        return this.rating;
     }
 
     // REQUIRES: rating must be between 1-5, inclusive

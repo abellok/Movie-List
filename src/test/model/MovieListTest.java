@@ -46,9 +46,10 @@ public class MovieListTest {
     @Test
     void testFindMoviesByDirector() {
         testList.addMovie(movie1);
-        testList.addMovie(movie2);
         testList.addMovie(movie3);
+        testList.addMovie(movie2);
         assertEquals(2, testList.findMoviesByDirector("Tim Burton").size());
+        assertEquals(1, testList.findMoviesByDirector("Hayao Miyazaki").size());
     }
 
     @Test
@@ -57,6 +58,17 @@ public class MovieListTest {
         testList.addMovie(movie2);
         testList.addMovie(movie3);
         assertEquals(0, testList.findMoviesByDirector("Christopher Nolan").size());
+    }
+
+    @Test
+    void testFindMovieByTitle() {
+        testList.addMovie(movie1);
+        testList.addMovie(movie2);
+        testList.addMovie(movie3);
+        assertEquals(movie1, testList.findMovieByTitle("Dark Shadows"));
+        assertEquals(movie3, testList.findMovieByTitle("Spirited Away"));
+        assertEquals(movie2, testList.findMovieByTitle("Corpse Bride"));
+        assertEquals(null, testList.findMovieByTitle("Cinderella"));
     }
 
     @Test

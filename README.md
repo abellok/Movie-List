@@ -9,6 +9,7 @@ and my rating of them!
 
 ## User Stories
 
+- As a user, I want to see all the movies in my movie list
 - As a user, I want to add a movie to a movie list
 - As a user, I want to delete a movie from a movie list
 - As a user, I want to change the rating of a movie in the list
