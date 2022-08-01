@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a single movie, with a title, director, genre, and movie
-public class Movie {
+public class Movie implements Writable {
     private String title;
     private String director;
     private String genre;
@@ -40,4 +43,14 @@ public class Movie {
         this.rating = rating;
     }
 
+    // assigns variables of movie to JSON keys
+    @Override
+    public JSONObject toJson() {
+        org.json.JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("director", director);
+        json.put("genre", genre);
+        json.put("rating", rating);
+        return json;
+    }
 }

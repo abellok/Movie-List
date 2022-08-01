@@ -1,0 +1,14 @@
+{"movies": [
+    {
+        "director": "Hayao Miyazaki",
+        "genre": "animation",
+        "rating": 5,
+        "title": "Spirited Away"
+    },
+    {
+        "director": "Tim Burton",
+        "genre": "fantasy",
+        "rating": 4,
+        "title": "Corpse Bride"
+    }
+]}

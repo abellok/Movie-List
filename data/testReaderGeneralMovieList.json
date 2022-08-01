@@ -1,0 +1,16 @@
+{
+  "movies": [
+    {
+      "title": "West Side Story",
+      "director": "Steven Spielberg",
+      "genre": "musical",
+      "rating": 3
+    },
+    {
+      "title": "My Neighbour Totoro",
+      "director": "Hayao Miyazaki",
+      "genre": "animation",
+      "rating": 4
+    }
+  ]
+}

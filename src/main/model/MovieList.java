@@ -1,9 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // represents a list of watched movies
-public class MovieList {
+// NOTE: borrows code from the JsonSerializationDemo
+public class MovieList implements Writable {
     private ArrayList<Movie> movieList;
 
     // EFFECTS: constructs an empty movie list
@@ -49,7 +56,7 @@ public class MovieList {
     }
 
     // EFFECTS: returns the current size of the movie list
-    public int listSize() {
+    public int checkListSize() {
         int size = 0;
         for (Movie m : movieList) {
             size = size + 1;
@@ -64,5 +71,29 @@ public class MovieList {
             titles.add(m.getTitle());
         }
         return titles;
+    }
+
+    // EFFECTS: returns an unmodifiable list of movies in the list
+    public List<Movie> getMovies() {
+        return Collections.unmodifiableList(movieList);
+    }
+
+    // EFFECTS: assigns movies to JSON list
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("movies", moviesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns movies in this movie list as a JSON array
+    private JSONArray moviesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Movie m : movieList) {
+            jsonArray.put(m.toJson());
+        }
+
+        return jsonArray;
     }
 }

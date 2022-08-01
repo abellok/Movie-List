@@ -3,8 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieListTest {
@@ -23,24 +21,24 @@ public class MovieListTest {
 
     @Test
     void testConstructor() {
-        assertEquals(0, testList.listSize());
+        assertEquals(0, testList.checkListSize());
     }
 
     @Test
     void testAddMovie() {
         testList.addMovie(movie1);
-        assertEquals(1, testList.listSize());
+        assertEquals(1, testList.checkListSize());
         testList.addMovie(movie2);
-        assertEquals(2, testList.listSize());
+        assertEquals(2, testList.checkListSize());
     }
 
     @Test
     void testDeleteMovie() {
        testList.addMovie(movie1);
        testList.addMovie(movie2);
-       assertEquals(2, testList.listSize());
+       assertEquals(2, testList.checkListSize());
        testList.deleteMovie(movie2);
-       assertEquals(1, testList.listSize());
+       assertEquals(1, testList.checkListSize());
     }
 
     @Test
@@ -73,10 +71,23 @@ public class MovieListTest {
 
     @Test
     void testListSize() {
+        assertEquals(0, testList.checkListSize());
         testList.addMovie(movie1);
+        assertEquals(1, testList.checkListSize());
         testList.addMovie(movie2);
         testList.addMovie(movie3);
-        assertEquals(3, testList.listSize());
+        assertEquals(3, testList.checkListSize());
+    }
+
+    @Test
+    void testGetTitles() {
+        assertEquals(0, testList.getMovieTitles().size());
+        testList.addMovie(movie1);
+        testList.addMovie(movie2);
+        assertEquals(2, testList.getMovieTitles().size());
+        assertEquals("Dark Shadows", testList.getMovieTitles().get(0));
+        assertEquals("Corpse Bride", testList.getMovieTitles().get(1));
+
     }
 
 

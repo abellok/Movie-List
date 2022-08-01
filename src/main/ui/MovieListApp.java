@@ -2,18 +2,25 @@ package ui;
 
 import model.MovieList;
 import model.Movie;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 // Movie list application
-// NOTE: borrows code from the Teller application
+// NOTE: borrows code from the Teller application and JSONSerializationDemo
 public class MovieListApp {
     private MovieList movieList;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/movieList.json";
 
     // runs the movie list application
-    public MovieListApp() {
+    public MovieListApp() throws FileNotFoundException {
         runApp();
     }
 
@@ -30,7 +37,7 @@ public class MovieListApp {
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("q")) {
+            if (command.equals("quit")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -43,16 +50,20 @@ public class MovieListApp {
     // MODIFIES: this
     // EFFECTS: processes user command
     public void processCommand(String command) {
-        if (command.equals("a")) {
+        if (command.equals("add")) {
             doAddMovie();
-        } else if (command.equals("p")) {
+        } else if (command.equals("print")) {
             doPrintMovieList(movieList.getMovieTitles());
-        } else if (command.equals("d")) {
+        } else if (command.equals("delete")) {
             doDeleteMovie();
-        } else if (command.equals("s")) {
+        } else if (command.equals("search")) {
             doSearchDirector();
-        } else if (command.equals("r")) {
+        } else if (command.equals("rate")) {
             doRateMovie();
+        } else if (command.equals("save")) {
+            saveMovieList();
+        } else if (command.equals("load")) {
+            loadMovieList();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -64,18 +75,22 @@ public class MovieListApp {
         movieList = new MovieList();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
     }
 
     // EFFECTS: displays menu of options to user
     public void displayMenu() {
         System.out.println("\nTHIS IS YOUR MOVIE LIST!");
         System.out.println("\tPlease select an option:");
-        System.out.println("\tp -> print current movie list");
-        System.out.println("\ta -> add movie");
-        System.out.println("\td -> delete movie");
-        System.out.println("\ts -> search movies made by a specific director");
-        System.out.println("\tr -> rate a movie in the list");
-        System.out.println("\tq -> quit");
+        System.out.println("\tprint -> print current movie list");
+        System.out.println("\tadd -> add movie");
+        System.out.println("\tdelete -> delete movie");
+        System.out.println("\tsearch -> search movies made by a specific director");
+        System.out.println("\trate -> rate a movie in the list");
+        System.out.println("\tsave -> save movie list to file");
+        System.out.println("\tload -> load movie list from file");
+        System.out.println("\tquit -> quit");
     }
 
     // EFFECTS: prints current movie list to the screen
@@ -186,6 +201,28 @@ public class MovieListApp {
             System.out.println("Movie rating changed successfully.");
         }
         System.out.println("");
+    }
+
+    // EFFECTS: saves the movie list to file
+    public void saveMovieList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(movieList);
+            jsonWriter.close();
+            System.out.println("Saved movie list to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: loads the movie list from file
+    public void loadMovieList() {
+        try {
+            movieList = jsonReader.read();
+            System.out.println("Loaded movie list from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 }
