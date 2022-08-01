@@ -14,3 +14,5 @@ and my rating of them!
 - As a user, I want to delete a movie from a movie list
 - As a user, I want to change the rating of a movie in the list
 - As a user, I want to find all the movies associated with a specific director
+- As a user, I want to be able to save my movie list to file
+- As a user, i want to be able to load my movie list from file
