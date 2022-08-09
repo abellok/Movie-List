@@ -29,13 +29,16 @@ public class PopoutWindow extends JFrame implements ActionListener,
         instructions = new JLabel("Please input movie information, then press 'add'");
         instructions.setFont(new Font("Serif",Font.BOLD, 20));
         instructions.setAlignmentX(CENTER_ALIGNMENT);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setSize(500, 200);
+        ((JPanel) getContentPane()).setBorder(new EmptyBorder(20, 20, 20, 20));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         setVisible(true);
-        add(instructions);
 
+        this.getContentPane().add(instructions);
+        this.getContentPane().add(Box.createVerticalStrut(20));
         createTextFields(this.getContentPane());
-
+        this.getContentPane().add(Box.createVerticalStrut(20));
         createAddButton(this.getContentPane());
     }
 
@@ -45,15 +48,18 @@ public class PopoutWindow extends JFrame implements ActionListener,
         popoutAddMoviebutton.addActionListener(this);
         popoutAddMoviebutton.setActionCommand("Add New Movie");
         popoutAddMoviebutton.setEnabled(true);
-        window.add(this.getContentPane());
+        window.add(popoutAddMoviebutton);
     }
 
     // EFFECTS: creates texts fields
     @SuppressWarnings("methodlength")
     public void createTextFields(Container window) {
         movieTitle = new JTextField(5);
+        movieTitle.setBounds(150,100, 80,30);
         movieDirector = new JTextField(5);
+        movieDirector.setBounds(300,100, 80,30);
         movieGenre = new JTextField(5);
+        movieGenre.setBounds(450,100, 80,30);
 
         movieTitle.getDocument().addDocumentListener(this);
         movieDirector.getDocument().addDocumentListener(this);
@@ -71,12 +77,12 @@ public class PopoutWindow extends JFrame implements ActionListener,
         newMovie.add(newTitle);
         newMovie.add(Box.createHorizontalStrut(5));
         newMovie.add(movieTitle);
-        newMovie.add(Box.createHorizontalStrut(5));
+        newMovie.add(Box.createHorizontalStrut(20));
 
         newMovie.add(newDirector);
         newMovie.add(Box.createHorizontalStrut(5));
         newMovie.add(movieDirector);
-        newMovie.add(Box.createHorizontalStrut(5));
+        newMovie.add(Box.createHorizontalStrut(20));
 
         newMovie.add(newGenre);
         newMovie.add(Box.createHorizontalStrut(5));

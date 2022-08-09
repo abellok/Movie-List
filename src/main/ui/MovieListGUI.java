@@ -19,7 +19,7 @@ import java.util.List;
 // NOTE: borrows code from LabelChanger application, the JSONSerializationDemo, and other demos from Java Tutorials
 public class MovieListGUI extends JFrame implements ActionListener, ListSelectionListener {
     private boolean alreadyEnabled = false;
-    private static final String JSON_STORE = "./data/library.json";
+    private static final String JSON_STORE = "./data/movieList.json";
 
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
@@ -39,6 +39,8 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
         createHomeScreen(this.getContentPane());
         createButtonListeners(this.getContentPane());
         movieList = new MovieList();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         pack();
         setLocationRelativeTo(null);
@@ -148,7 +150,7 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
             } catch (IOException f) {
                 Toolkit.getDefaultToolkit().beep();
             }
-            addSavedMovies(movieList.getUnmodifiableMovies());
+            addSavedMovies(movieList.getMovies());
         }
 
         if (e.getActionCommand().equals("Save File")) {
