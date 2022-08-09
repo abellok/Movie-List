@@ -74,8 +74,13 @@ public class MovieList implements Writable {
     }
 
     // EFFECTS: returns an unmodifiable list of movies in the list
-    public List<Movie> getMovies() {
+    public List<Movie> getUnmodifiableMovies() {
         return Collections.unmodifiableList(movieList);
+    }
+
+    // EFFECTS: returns a basic list of movies
+    public List<Movie> getMovies() {
+        return movieList;
     }
 
     // EFFECTS: assigns movies to JSON list

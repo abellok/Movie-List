@@ -60,7 +60,7 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralMovieList.json");
             movieList = reader.read();
-            List<Movie> movies = movieList.getMovies();
+            List<Movie> movies = movieList.getUnmodifiableMovies();
             assertEquals(2, movies.size());
             checkMovie("Spirited Away", "Hayao Miyazaki", "animation", 5,
                     movies.get(0));

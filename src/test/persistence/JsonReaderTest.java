@@ -40,7 +40,7 @@ public class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testReaderGeneralMovieList.json");
         try {
             MovieList movieList = reader.read();
-            List<Movie> movies = movieList.getMovies();
+            List<Movie> movies = movieList.getUnmodifiableMovies();
             assertEquals(2, movies.size());
             checkMovie("West Side Story", "Steven Spielberg", "musical",
                     3, movies.get(0));
