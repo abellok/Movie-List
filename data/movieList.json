@@ -1,14 +1,6 @@
-{"movies": [
-    {
-        "director": "George Lucas",
-        "genre": "Fantasy",
-        "rating": 0,
-        "title": "Star Wars"
-    },
-    {
-        "director": "Nintendo",
-        "genre": "Fantasy",
-        "rating": 0,
-        "title": "Pokemon"
-    }
-]}
+{"movies": [{
+    "director": "asdf",
+    "genre": "asdf",
+    "rating": 0,
+    "title": "adsf"
+}]}

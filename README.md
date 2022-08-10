@@ -27,3 +27,9 @@ button underneath.
 - My visual elements are located in both the main window and the popup window.
 - You can save the state of my application by pressing the 'save' button.
 - You can reload the state of my saved application by pressing the 'load' button.
+
+## Phase 4: Task 2
+
+- New movie added
+- Movie deleted
+- New movie added

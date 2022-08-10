@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -13,12 +14,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 // Movie List GUI
-// NOTE: borrows code from LabelChanger application, the JSONSerializationDemo, and other demos from Java Tutorials
-public class MovieListGUI extends JFrame implements ActionListener, ListSelectionListener {
+// NOTE: borrows code from LabelChanger application, JSONSerializationDemo, Alarm System application,
+//       and other demos from Java Tutorials
+public class MovieListGUI extends JFrame implements ActionListener, ListSelectionListener, LogPrinter {
     private static final String JSON_STORE = "./data/movieList.json";
 
     private JsonReader jsonReader;
@@ -44,11 +45,24 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                try {
+                    printLog(EventLog.getInstance());
+                } catch (LogException ex) {
+                    System.out.println("Issues printing log");
+                    ex.printStackTrace();
+                }
+                dispose();
+            }
+        });
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(true);
     }
+
 
     // EFFECTS: creates the homescreen window
     public void createHomeScreen(Container window) {
@@ -138,7 +152,7 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
         if (e.getActionCommand().equals("Delete Movie")) {
             int index = list.getSelectedIndex();
             listModel.remove(index);
-            movieList.getMovies().remove(index);
+            movieList.deleteMovie(movieList.getMovies().get(index));
 
             int size = listModel.getSize();
 
@@ -226,6 +240,15 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
             }
         }
     }
+
+    // EFFECTS: Prints events from a log to the console
+    @Override
+    public void printLog(EventLog el) throws LogException {
+        for (Event next : el) {
+            System.out.println(next.getDescription());
+        }
+    }
+
 
     public JList getJList() {
         return list;

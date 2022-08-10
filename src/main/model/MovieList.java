@@ -7,10 +7,11 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 // represents a list of watched movies
 // NOTE: borrows code from the JsonSerializationDemo
-public class MovieList implements Writable {
+public class MovieList extends Observable implements Writable {
     private ArrayList<Movie> movieList;
 
     // EFFECTS: constructs an empty movie list
@@ -23,6 +24,7 @@ public class MovieList implements Writable {
     // EFFECTS: adds a movie to the list
     public void addMovie(Movie movie) {
         movieList.add(movie);
+        EventLog.getInstance().logEvent(new Event("New movie added"));
     }
 
     // REQUIRES: specified movie exists in list
@@ -30,6 +32,7 @@ public class MovieList implements Writable {
     // EFFECTS: deletes a movie from a list
     public void deleteMovie(Movie movie) {
         movieList.remove(movie);
+        EventLog.getInstance().logEvent(new Event("Movie deleted"));
     }
 
     // EFFECTS: returns a list of movies directed by a specific director;
