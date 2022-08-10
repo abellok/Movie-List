@@ -15,4 +15,15 @@ and my rating of them!
 - As a user, I want to change the rating of a movie in the list
 - As a user, I want to find all the movies associated with a specific director
 - As a user, I want to be able to save my movie list to file
-- As a user, i want to be able to load my movie list from file
+- As a user, I want to be able to load my movie list from file
+
+## Instructions for Grader
+
+- You can generate the first required event by pressing the 'add' button. This will trigger a popup window
+that will prompt you to enter information of a movie you wish to add to the list. Click 'add' in the popup window 
+to add it to the list. 
+- You can generate the second required event by selecting a movie in the list on the main window, and pressing the 'delete'
+button underneath.
+- My visual elements are located in both the main window and the popup window.
+- You can save the state of my application by pressing the 'save' button.
+- You can reload the state of my saved application by pressing the 'load' button.
