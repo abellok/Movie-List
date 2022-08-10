@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 
 // NOTE: borrows code from the JsonSerializationDemo
 public class Main {

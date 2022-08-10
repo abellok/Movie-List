@@ -9,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.util.List;
 
 // Popout window to add movies to list
 public class PopoutWindow extends JFrame implements ActionListener,
@@ -22,14 +21,17 @@ public class PopoutWindow extends JFrame implements ActionListener,
     private JTextField movieGenre;
     private JButton popoutAddMoviebutton;
     private MovieListGUI gui;
+    private ImageIcon imageIcon;
+    private JLabel label;
 
+    // a popup window that allows users to add a movie to a list
     PopoutWindow(MovieListGUI gui) {
         super("Add Movie");
         this.gui = gui;
         instructions = new JLabel("Please input movie information, then press 'add'");
         instructions.setFont(new Font("Serif",Font.BOLD, 20));
         instructions.setAlignmentX(CENTER_ALIGNMENT);
-        setSize(500, 200);
+        setSize(500, 430);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(20, 20, 20, 20));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -37,11 +39,29 @@ public class PopoutWindow extends JFrame implements ActionListener,
 
         this.getContentPane().add(instructions);
         this.getContentPane().add(Box.createVerticalStrut(20));
+
+        createGraphic(this.getContentPane());
+        this.getContentPane().add(Box.createVerticalStrut(20));
+
         createTextFields(this.getContentPane());
         this.getContentPane().add(Box.createVerticalStrut(20));
+
         createAddButton(this.getContentPane());
     }
 
+    // EFFECTS: initializes graphic and adds it to window
+    public void createGraphic(Container window) {
+        this.imageIcon = new ImageIcon("./data/disney-question-720x340.jpg");
+        Image image = imageIcon.getImage();
+        Image newImg = image.getScaledInstance(400, 200,  java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newImg);
+        this.label = new JLabel(imageIcon);
+        label.setAlignmentX(CENTER_ALIGNMENT);
+        window.add(label);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates add button
     public void createAddButton(Container window) {
         popoutAddMoviebutton = new JButton("Add");
         popoutAddMoviebutton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -51,6 +71,7 @@ public class PopoutWindow extends JFrame implements ActionListener,
         window.add(popoutAddMoviebutton);
     }
 
+    // MODIFIES: this
     // EFFECTS: creates texts fields
     @SuppressWarnings("methodlength")
     public void createTextFields(Container window) {
@@ -91,7 +112,9 @@ public class PopoutWindow extends JFrame implements ActionListener,
         window.add(newMovie);
     }
 
-
+    // MODIFIES: MovieListGUI
+    // EFFECTS: when 'add' button is pressed, adds a movie to the list only if all text boxes are filled;
+    //          resets text boxes on click
     @SuppressWarnings("methodlength")
     @Override
     public void actionPerformed(ActionEvent e) {

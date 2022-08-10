@@ -1,6 +1,14 @@
-{"movies": [{
-    "director": "Disney",
-    "genre": "Animation",
-    "rating": 0,
-    "title": "Moana"
-}]}
+{"movies": [
+    {
+        "director": "George Lucas",
+        "genre": "Fantasy",
+        "rating": 0,
+        "title": "Star Wars"
+    },
+    {
+        "director": "Nintendo",
+        "genre": "Fantasy",
+        "rating": 0,
+        "title": "Pokemon"
+    }
+]}

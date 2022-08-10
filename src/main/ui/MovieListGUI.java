@@ -13,12 +13,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 // Movie List GUI
 // NOTE: borrows code from LabelChanger application, the JSONSerializationDemo, and other demos from Java Tutorials
 public class MovieListGUI extends JFrame implements ActionListener, ListSelectionListener {
-    private boolean alreadyEnabled = false;
     private static final String JSON_STORE = "./data/movieList.json";
 
     private JsonReader jsonReader;
@@ -28,16 +28,18 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
     private JButton loadListButton;
     private JButton saveListButton;
     private ImageIcon image;
+    private JLabel label;
     private JList list;
     private DefaultListModel listModel;
     private MovieList movieList;
+    private PopoutWindow popoutWindow;
 
     public MovieListGUI() {
         super("Movie List App");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         createHomeScreen(this.getContentPane());
-        createButtonListeners(this.getContentPane());
+        createButtonListeners();
         movieList = new MovieList();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -53,9 +55,19 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
         window.setLayout(new BoxLayout(window, BoxLayout.Y_AXIS));
         window.add(displayTitle());
 
+        createGraphic(window);
+
         createListScroller(window);
 
         createButtonPanel(window);
+    }
+
+    // EFFECTS: creates graphic and displays it in window
+    public void createGraphic(Container window) {
+        this.image = new ImageIcon("./data/movie-excited.gif");
+        this.label = new JLabel(image);
+        label.setAlignmentX(CENTER_ALIGNMENT);
+        window.add(label);
     }
 
     // EFFECTS: creates title label
@@ -100,7 +112,7 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
     }
 
     // EFFECTS: creates action listeners for each button
-    public void createButtonListeners(Container window) {
+    public void createButtonListeners() {
         addMovieButton.addActionListener(this);
         addMovieButton.setActionCommand("Add Movie");
         addMovieButton.setEnabled(true);
@@ -120,7 +132,7 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
     @SuppressWarnings("methodlength")
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Add Movie")) {
-            PopoutWindow popoutWindow = new PopoutWindow(this);
+            popoutWindow = new PopoutWindow(this);
         }
 
         if (e.getActionCommand().equals("Delete Movie")) {
@@ -199,124 +211,11 @@ public class MovieListGUI extends JFrame implements ActionListener, ListSelectio
         }
     }
 
-    // EFFECTS: creates a popout to add a movie to the list
-//    @SuppressWarnings("methodlength")
-//    public void createPopout() {
-//        JFrame popoutWindow = new JFrame();
-//        JLabel instructions = new JLabel("Please input movie information, then press 'add'");
-//        instructions.setFont(new Font("Serif", Font.BOLD, 20));
-//        instructions.setAlignmentX(CENTER_ALIGNMENT);
-//        popoutWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        popoutWindow.setLayout(new BoxLayout(popoutWindow, BoxLayout.Y_AXIS));
-//        popoutWindow.setVisible(true);
-//        popoutWindow.add(instructions);
-//
-//        createTextFields(popoutWindow);
-//
-//        String title = movieTitle.getText();
-//        String director = movieDirector.getText();
-//        String genre = movieGenre.getText();
-//
-//        if (title.equals("") || director.equals("") || genre.equals("")) {
-//            Toolkit.getDefaultToolkit().beep();
-//            return;
-//        }
-//
-//        int index = list.getSelectedIndex(); //get selected index
-//        if (index == -1) { //no selection, so insert at beginning
-//            index = 0;
-//        } else {           //add after the selected item
-//            index++;
-//        }
-//        listModel.addElement(title);
-//
-//        movieList.addMovie(new Movie(movieTitle.getText(), movieDirector.getText(), movieGenre.getText()));
-//
-//        movieTitle.requestFocusInWindow();
-//        movieTitle.setText("");
-//        movieDirector.requestFocusInWindow();
-//        movieDirector.setText("");
-//        movieGenre.requestFocusInWindow();
-//        movieGenre.setText("");
-//
-//        list.setSelectedIndex(index);
-//        list.ensureIndexIsVisible(index);
-//    }
-//
-//    // EFFECTS: creates texts fields
-//    @SuppressWarnings("methodlength")
-//    public void createTextFields(Container window) {
-//        movieTitle = new JTextField(5);
-//        movieDirector = new JTextField(5);
-//        movieGenre = new JTextField(5);
-//
-//        movieTitle.getDocument().addDocumentListener(this);
-//        movieDirector.getDocument().addDocumentListener(this);
-//        movieGenre.getDocument().addDocumentListener(this);
-//
-//        JPanel newMovie = new JPanel();
-//        newMovie.setLayout(new BoxLayout(newMovie, BoxLayout.X_AXIS));
-//        JLabel newTitle = new JLabel("Title:");
-//        newTitle.setFont(new Font("Serif", Font.PLAIN, 15));
-//        JLabel newDirector = new JLabel("Director:");
-//        newDirector.setFont(new Font("Serif", Font.PLAIN, 15));
-//        JLabel newGenre = new JLabel("Genre:");
-//        newGenre.setFont(new Font("Serif", Font.PLAIN, 15));
-//
-//        newMovie.add(newTitle);
-//        newMovie.add(Box.createHorizontalStrut(5));
-//        newMovie.add(movieTitle);
-//        newMovie.add(Box.createHorizontalStrut(5));
-//
-//        newMovie.add(newDirector);
-//        newMovie.add(Box.createHorizontalStrut(5));
-//        newMovie.add(movieDirector);
-//        newMovie.add(Box.createHorizontalStrut(5));
-//
-//        newMovie.add(newGenre);
-//        newMovie.add(Box.createHorizontalStrut(5));
-//        newMovie.add(movieGenre);
-//
-//        window.add(newMovie);
-//    }
-//
-//    // EFFECTS: checks if text fields are empty. Required by DocumentListener.
-//    public void removeUpdate(DocumentEvent e) {
-//        handleEmptyTextField(e);
-//    }
-//
-//    // EFFECTS: enables add movie button. Required by DocumentListener.
-//    public void insertUpdate(DocumentEvent e) {
-//        if (!alreadyEnabled) {
-//            popoutAddMoviebutton.setEnabled(true);
-//        }
-//    }
-//
-//    // EFFECTS: enables add movie button if text fields are not empty and if button is not already enabled.
-//    //          Required by DocumentListener.
-//    public void changedUpdate(DocumentEvent e) {
-//        if (!handleEmptyTextField(e)) {
-//            if (!alreadyEnabled) {
-//                popoutAddMoviebutton.setEnabled(true);
-//            }
-//        }
-//    }
-//
-//    // EFFECTS: when text field is empty, disables add movie button and returns true. Otherwise, returns false.
-//    private boolean handleEmptyTextField(DocumentEvent e) {
-//        if (e.getDocument().getLength() <= 0) {
-//            popoutAddMoviebutton.setEnabled(false);
-//            alreadyEnabled = false;
-//            return true;
-//        }
-//        return false;
-//    }
-
     // EFFECTS: enables the delete button if something in the list is selected,
     //          otherwise keeps delete button disabled
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
+        if (!e.getValueIsAdjusting()) {
 
             if (list.getSelectedIndex() == -1) {
                 deleteMovieButton.setEnabled(false);
