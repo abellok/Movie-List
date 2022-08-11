@@ -33,3 +33,15 @@ button underneath.
 - New movie added
 - Movie deleted
 - New movie added
+
+## Phase 4: Task 3
+
+In terms of design, if I had more time I would for sure refactor my code. 
+For instance, I would probably separate the code related to button-making in my MovieListGUI into 
+separate classes, which each implement a higher-level 'button' interface. This would make the 
+readability of my code much easier, and would also decrease the repetitive code within the
+single MovieListGUI class that handles the graphical interaction.
+
+I would also change the multiplicity of PopoutWindow within MovieListGUI to 
+1 (instead of 0...*). Only one window is needed to complete the intended
+function, so these would better the design of the project.
